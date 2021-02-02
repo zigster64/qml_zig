@@ -25,6 +25,8 @@ Initial
 
 `zig build Tables` - Tableview example
 
+`zig build Properties` - Properties example, passing QVariant values from Zig to QML
+
 # Work in Progres Examples
 
 `zig build Particle` - Particle system example

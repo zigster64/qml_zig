@@ -1,6 +1,14 @@
 const std = @import("std");
 usingnamespace @import("./DOtherSide.zig");
 
+pub const QConnectionType = enum(c_int) {
+    Auto = 0,
+    Direct = 1,
+    Queued = 2,
+    BlockingQueued = 3,
+    Unique = 0x80,
+};
+
 pub fn QObject(comptime T: type) type {
     const typeInfo: std.builtin.TypeInfo = @typeInfo(T);
     const str: std.builtin.TypeInfo.Struct = typeInfo.Struct;

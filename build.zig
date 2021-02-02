@@ -63,6 +63,9 @@ pub fn build(b: *Builder) !void {
     try makeExample(b, mode, target, "examples/splitview.zig", "Splits");
     try makeExample(b, mode, target, "examples/tableview.zig", "Tables");
 
+    // Copypasta from the Rust QML examples https://github.com/White-Oak/qml-rust
+    try makeExample(b, mode, target, "examples/properties.zig", "Properties");
+
     // Cloned simple examples from the Qml doco
     try makeExample(b, mode, target, "examples/cells.zig", "Cells");
 }

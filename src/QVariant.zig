@@ -1,3 +1,4 @@
+const std = @import("std");
 const dos = @import("DOtherSide.zig");
 
 //TODO: add rest of supported types
@@ -5,16 +6,21 @@ pub const QVariant = struct {
     vptr: ?*dos.DosQVariant,
 
     pub fn create(value: anytype) QVariant {
+        const t = @typeInfo(@TypeOf(value));
+        //@compileLog("value", value);
+        //@compileLog("typeOf", @TypeOf(value));
+        //@compileLog("typeInfo", @typeInfo(@TypeOf(value)));
         var vptr = switch (@typeInfo(@TypeOf(value))) {
             .Null => dos.dos_qvariant_create(),
+            .Bool => dos.dos_qvariant_create_bool(value),
+            // TODO - assuming all ptrs are strings is not right, but it does allow strings at least
             .Pointer => dos.dos_qvariant_create_string(value),
-            .Int => dos.dos_qvariant_create_int(@intCast(c_int, value)),
+            .Int, .ComptimeInt => dos.dos_qvariant_create_int(@intCast(c_int, value)),
             .Float => |float| switch (float.bits) {
                 32 => dos.dos_qvariant_create_float(value),
                 64 => dos.dos_qvariant_create_double(value),
                 else => @compileError("Unsupported type '" ++ @typeName(value) ++ "'"),
             },
-            .Bool => dos.dos_qvariant_create_bool(value),
             @typeInfo(QVariant) => dos.dos_qvariant_create_qvariant(value.vptr),
             else => @compileError("Unsupported type '" ++ @typeName(value) ++ "'"),
         };
@@ -32,14 +38,15 @@ pub const QVariant = struct {
     pub fn setValue(self: QVariant, value: anytype) void {
         switch (@typeInfo(@TypeOf(value))) {
             .Null => @compileError("Cannot set variant to null"),
+            .Bool => dos.dos_qvariant_setBool(self.vptr, value),
             .Pointer => dos.dos_qvariant_setString(self.vptr, value),
-            .Int => dos.dos_qvariant_setInt(self.vptr, @intCast(c_int, value)),
+            .Int, .ComptimeInt => dos.dos_qvariant_setInt(self.vptr, @intCast(c_int, value)),
             .Float => |float| switch (float.bits) {
-                32 => dos.dos_qvariant_setFloat(value),
-                64 => dos.dos_qvariant_setDouble(value),
+                32 => dos.dos_qvariant_setFloat(self.vptr, value),
+                64 => dos.dos_qvariant_setDouble(self.vptr, value),
                 else => @compileError("Unsupported type '" ++ @typeName(value) ++ "'"),
             },
-            .Bool => dos.dos_qvariant_setBool(self.vptr, value),
+            .Array => @compileError("Need to do arrays yet"),
             else => @compileError("Unsupported type '" ++ @typeName(value) ++ "'"),
         }
     }
@@ -47,9 +54,9 @@ pub const QVariant = struct {
     pub fn getValue(self: QVariant, comptime T: type) T {
         return switch (@typeInfo(T)) {
             .Null => @compileError("Use isNull"),
-            .Pointer => dos.dos_qvariant_toString(self.vptr),
-            .Int => @intCast(T, dos.dos_qvariant_toInt(self.vptr)),
             .Bool => dos.dos_qvariant_toBool(self.vptr),
+            .Pointer => dos.dos_qvariant_toString(self.vptr),
+            .Int, .ComptimeInt => @intCast(T, dos.dos_qvariant_toInt(self.vptr)),
             .Float => |float| switch (float.bits) {
                 32 => dos.dos_qvariant_toFloat(self.vptr),
                 64 => dos.dos_qvariant_toDouble(self.vptr),

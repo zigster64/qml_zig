@@ -91,7 +91,7 @@ ApplicationWindow {
             Timer {
                 interval: life
                 running: true
-                //onTriggered: ctrl.done(container)
+                onTriggered: ctrl.done(container)
             }
         }
     }

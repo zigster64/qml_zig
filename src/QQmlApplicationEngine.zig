@@ -1,6 +1,7 @@
 const dos = @import("DOtherSide.zig");
 const QUrl = @import("QUrl.zig").QUrl;
 const QQmlContext = @import("QQmlContext.zig").QQmlContext;
+const QVariant = @import("QVariant.zig");
 
 pub const QQmlApplicationEngine = struct {
     vptr: ?*dos.DosQQmlApplicationEngine,
@@ -31,6 +32,16 @@ pub const QQmlApplicationEngine = struct {
 
     pub fn addImportPath(self: QQmlApplicationEngine, path: [*c]const u8) void {
         dos.dos_qqmlapplicationengine_add_import_path(self.vptr, path);
+        return self;
+    }
+
+    pub fn setValue(self: QQmlApplicationEngine, name: [*c]const u8, value: QVariant.QVariant) void {
+        var c = self.rootContext();
+        c.setContextProperty(name, value);
+    }
+
+    pub fn setStyle(self: QQmlApplicationEngine, style: [*c]const u8) void {
+        dos.dos_qquickstyle_set_style(style);
     }
 
     // TODO: addImageProvider
