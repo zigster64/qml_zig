@@ -11,7 +11,6 @@ ApplicationWindow {
     Text {
         text: "This should be styled\nwith the Flat setting"
         y: 30
-        anchors.horizontalCenter: app.contentItem.horizontalCenter
         font.pointSize: 16; font.bold: true
     }
 

@@ -30,6 +30,10 @@ const Pkgs = struct {
         .name = "QUrl",
         .path = "src/QUrl.zig",
     };
+    const QUrl: Pkg = .{
+        .name = "QStyle",
+        .path = "src/QStyle.zig",
+    };
     const QQmlApplicationEngine: Pkg = .{
         .name = "QQmlApplicationEngine",
         .path = "src/QQmlApplicationEngine.zig",

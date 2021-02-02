@@ -33,9 +33,5 @@ pub const QQmlApplicationEngine = struct {
         dos.dos_qqmlapplicationengine_add_import_path(self.vptr, path);
     }
 
-    pub fn setStyle(self: QQmlApplicationEngine, style: [*c]const u8) void {
-        dos.dos_qquickstyle_set_style(style);
-    }
-
     // TODO: addImageProvider
 };
