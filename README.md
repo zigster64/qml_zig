@@ -27,6 +27,8 @@ Initial
 
 `zig build Properties` - Properties example, passing QVariant values from Zig to QML
 
+`zig build Web` - WebEngine example, adding a chromium based browser in a QML view
+
 # Work in Progres Examples
 
 `zig build Particle` - Particle system example
