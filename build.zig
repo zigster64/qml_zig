@@ -30,9 +30,9 @@ const Pkgs = struct {
         .name = "QUrl",
         .path = "src/QUrl.zig",
     };
-    const QUrl: Pkg = .{
-        .name = "QStyle",
-        .path = "src/QStyle.zig",
+    const QQuickStyle: Pkg = .{
+        .name = "QQuickStyle",
+        .path = "src/QQuickStyle.zig",
     };
     const QQmlApplicationEngine: Pkg = .{
         .name = "QQmlApplicationEngine",
@@ -86,6 +86,7 @@ fn makeExample(b: *Builder, mode: std.builtin.Mode, target: std.zig.CrossTarget,
     example.addPackage(Pkgs.QObject);
     example.addPackage(Pkgs.QVariant);
     example.addPackage(Pkgs.QUrl);
+    example.addPackage(Pkgs.QQuickStyle);
     example.addPackage(Pkgs.QMetaType);
     example.addPackage(Pkgs.QMetaObject);
     example.addPackage(Pkgs.QQmlContext);

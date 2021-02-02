@@ -1,7 +1,7 @@
 const std = @import("std");
 usingnamespace @import("QGuiApplication");
 usingnamespace @import("QQmlApplicationEngine");
-usingnamespace @import("QStyle");
+usingnamespace @import("QQuickStyle");
 
 pub fn main() anyerror!void {
     QGuiApplication.init();
@@ -11,9 +11,7 @@ pub fn main() anyerror!void {
     defer engine.delete();
 
     // This should work, but doesnt seem to work :(
-    std.debug.print("-------------------\n", .{});
-    QStyle.set("Flat");
-    std.debug.print("-------------------\n", .{});
+    QQuickStyle.set("Flat");
 
     // You can however get the same effect by doing
     // export export QT_QUICK_CONTROLS_STYLE=Flat
