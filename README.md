@@ -25,6 +25,13 @@ Initial
 
 `zig build Tables` - Tableview example
 
+# Using 3rd Party QML modules
+
+`zig build Style` - Use 3rd Party Material Design QML
+
+`zig build Plasma` - Use KDE Plasma widgets
+
+
 # Work in Progres Examples
 
 `zig build Particle` - Particle system example

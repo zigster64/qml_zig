@@ -51,23 +51,27 @@ pub fn build(b: *Builder) !void {
     try cmakeBuild(b);
 
     // Original examples
-    try makeExample(b, mode, target, "examples/animated.zig", "Animated");
-    try makeExample(b, mode, target, "examples/hello.zig", "Hello");
+    try makeExample(b, mode, target, "examples/animated.zig", "Animated", "Animated block example");
+    try makeExample(b, mode, target, "examples/hello.zig", "Hello", "Hello World in Zig QML");
 
     // More examples
-    try makeExample(b, mode, target, "examples/button.zig", "Button");
+    try makeExample(b, mode, target, "examples/button.zig", "Button", "Simple Button example");
+
+    // 3rd party QML
+    try makeExample(b, mode, target, "examples/style.zig", "Style", "Use 3rd Party Material Design Style");
+    try makeExample(b, mode, target, "examples/plasma.zig", "Plasma", "Use KDE Plasma Widgets");
 
     // Copypasta from the Go QML eamples https://github.com/go-qml/qml/tree/v1/examples
-    try makeExample(b, mode, target, "examples/particle.zig", "Particle");
-    try makeExample(b, mode, target, "examples/layouts.zig", "Layouts");
-    try makeExample(b, mode, target, "examples/splitview.zig", "Splits");
-    try makeExample(b, mode, target, "examples/tableview.zig", "Tables");
+    try makeExample(b, mode, target, "examples/particle.zig", "Particle", "Particle System example (WIP)");
+    try makeExample(b, mode, target, "examples/layouts.zig", "Layouts", "Layouts example");
+    try makeExample(b, mode, target, "examples/splitview.zig", "Splits", "Split Panes example");
+    try makeExample(b, mode, target, "examples/tableview.zig", "Tables", "Tables example");
 
     // Cloned simple examples from the Qml doco
-    try makeExample(b, mode, target, "examples/cells.zig", "Cells");
+    try makeExample(b, mode, target, "examples/cells.zig", "Cells", "Cells example");
 }
 
-fn makeExample(b: *Builder, mode: std.builtin.Mode, target: std.zig.CrossTarget, src: string, name: string) !void {
+fn makeExample(b: *Builder, mode: std.builtin.Mode, target: std.zig.CrossTarget, src: string, name: string, descr: string) !void {
     //Example 1
     const example = b.addExecutable(name, src);
     if (mode != .Debug) {
@@ -95,7 +99,6 @@ fn makeExample(b: *Builder, mode: std.builtin.Mode, target: std.zig.CrossTarget,
         run_cmd.addArgs(args);
     }
 
-    var descr = std.fmt.allocPrintZ(alloc, fmt_description, .{name}) catch unreachable;
     const run_step = b.step(name, descr);
     run_step.dependOn(&run_cmd.step);
 }
