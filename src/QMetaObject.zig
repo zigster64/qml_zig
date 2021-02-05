@@ -38,6 +38,7 @@ pub const QMetaObject = struct {
 
         const properties_ = try allocPropertyDefinitions(T);
         defer freePropertyDefinitions(properties_);
+
         return QMetaObject{ .vptr = dos.dos_qmetaobject_create(parent, &@typeName(T)[0], &signals_, &slots_, &properties_) };
     }
 

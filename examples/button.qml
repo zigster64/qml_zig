@@ -6,9 +6,13 @@ ApplicationWindow {
     height: 400
     visible: true
 
+    Text {
+        id: textField
+        text: person.name
+    }
     Button {
         id: button
-        text: "A button you can click on"
+        text: "A button with callbacks into Zig"
         background: Rectangle {
             implicitWidth: 100
             implicitHeight: 40
