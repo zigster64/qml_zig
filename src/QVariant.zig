@@ -12,7 +12,7 @@ pub const QVariant = struct {
             .Float => |float| switch (float.bits) {
                 32 => dos.dos_qvariant_create_float(value),
                 64 => dos.dos_qvariant_create_double(value),
-                else => @compileError("Unsupported type '" ++ @typeName(value) ++ "'"),
+                else => @compileError("Unsupported float bits '" ++ float.bits ++ "'"),
             },
             .Bool => dos.dos_qvariant_create_bool(value),
             @typeInfo(QVariant) => dos.dos_qvariant_create_qvariant(value.vptr),
